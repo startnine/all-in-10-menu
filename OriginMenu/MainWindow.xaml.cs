@@ -1,21 +1,15 @@
 ﻿using Start9.Api.Controls;
-using Start9.Api.Tools;
+using Start9.Api.DiskItems;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 
 namespace OriginMenu
 {
@@ -48,7 +42,7 @@ namespace OriginMenu
                         item.Background = new SolidColorBrush(Colors.DarkRed);
                         item.Icon = new Canvas()
                         {
-                            Background = new ImageBrush(MiscTools.GetIconFromFilePath(expS, 64, 64, 0x00000000 | 0x100)),
+                            Background = (ImageBrush) new DiskItemToIconImageBrushConverter().Convert(new DiskItem(expS), null, 64, null),
                             HorizontalAlignment = HorizontalAlignment.Stretch,
                             VerticalAlignment = VerticalAlignment.Stretch
                         };
@@ -61,7 +55,7 @@ namespace OriginMenu
                             {
                                 Process.Start(expS);
                             }
-                            catch (System.ComponentModel.Win32Exception ex)
+                            catch (Win32Exception ex)
                             {
                                 Debug.WriteLine(ex);
                             }
@@ -196,8 +190,6 @@ namespace OriginMenu
             }
         }
 
-        ToggleButton tempStart;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -218,7 +210,7 @@ namespace OriginMenu
             {
                 item.Icon = new Canvas()
                 {
-                    Background = new ImageBrush(MiscTools.GetIconFromFilePath(expS, 32, (UInt32)(0x00000000 | 0x100))),
+                    Background = (ImageBrush) new DiskItemToIconImageBrushConverter().Convert(new DiskItem(expS), null, 32, null),  //ImageBrush(MiscTools.GetIconFromFilePath(expS, 32, (UInt32)(0x00000000 | 0x100))),
                     Width = 32,
                     Height = 32
                 };
