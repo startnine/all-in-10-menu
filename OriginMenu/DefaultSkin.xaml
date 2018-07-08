@@ -1,0 +1,620 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:OriginMenu"
+                    xmlns:apictrl="clr-namespace:Start9.Api.Controls;assembly=Start9.Api"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <VisualBrush x:Key="Start9LogoMaskBrush" TileMode="None" Viewport="0,0,1,1"
+                                                 ViewportUnits="RelativeToBoundingBox"
+                                                 Viewbox="0,0,144.00073,256.00027" ViewboxUnits="Absolute">
+        <VisualBrush.Visual>
+                <Canvas Name="svg8" Width="144.00073" Height="256.00027">
+                    <Canvas.RenderTransform>
+                        <TranslateTransform X="0" Y="0" />
+                    </Canvas.RenderTransform>
+                    <Canvas.Resources />
+                    <!--Unknown tag: sodipodi:namedview-->
+                    <!--Unknown tag: metadata-->
+                    <Canvas Name="layer1">
+                        <Canvas.RenderTransform>
+                            <TranslateTransform X="-1.8930132e-5" Y="-40.999866" />
+                        </Canvas.RenderTransform>
+                        <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                                          Name="path4485" Fill="#FF000000" StrokeThickness="0.31324857"
+                                                          Stroke="#FF000000" StrokeLineJoin="Miter"
+                                                          StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+                            <Path.Data>
+                                <PathGeometry
+                                                                Figures="M 0.38570981 108.65214 C 5.5479943 22.701762 116.12822 17.544525 141.23878 100.63075 52.19885 44.948872 33.173221 180.00833 143.83516 152.4612 142.17373 190.6451 119.6223 277.64656 13.367569 296.84602 51.063522 272.16844 77.598523 245.46586 78.925911 193.80218 c 0 0 -83.7024856 0.80034 -78.54020119 -85.15004 z"
+                                                                FillRule="NonZero" />
+                            </Path.Data>
+                        </Path>
+                    </Canvas>
+                </Canvas>
+            </VisualBrush.Visual>
+        </VisualBrush>
+
+    <QuinticEase x:Key="StartGlowQuinticEase" EasingMode="EaseInOut"/>
+
+    <Style x:Key="StartStyle" TargetType="ToggleButton">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#01000000">
+                        <Grid Margin="0,10,10,0">
+                            <Grid x:Name="HoverBackground" Background="#FF111111" Opacity="0"/>
+                            <Grid x:Name="PressedBackground" Background="{x:Static SystemColors.ActiveBorderBrush}" Visibility="Hidden"/>
+                            <Canvas x:Name="IdleEmblem" Background="White" Width="13.500054199161586821763898920888" Height="24" Margin="0.5,0,-0.5,0" OpacityMask="{StaticResource Start9LogoMaskBrush}">
+                                <Canvas.RenderTransform>
+                                    <TranslateTransform X="0" Y="0" />
+                                </Canvas.RenderTransform>
+                                <Canvas.Effect>
+                                    <DropShadowEffect x:Name="DropShadow" Color="Black" Direction="0"
+                                                      ShadowDepth="0" BlurRadius="1" Opacity="0.5" />
+                                </Canvas.Effect>
+                            </Canvas>
+                            <Canvas x:Name="HoverEmblem" Width="13.500054199161586821763898920888" Height="24" Margin="0.5,0,-0.5,0" OpacityMask="{StaticResource Start9LogoMaskBrush}" Opacity="0">
+                                <Canvas.RenderTransform>
+                                    <TranslateTransform X="0" Y="0" />
+                                </Canvas.RenderTransform>
+                                <Canvas.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <LinearGradientBrush.GradientStops>
+                                            <GradientStop x:Name="LeftStop" Offset="1" Color="#FF0B9393"/>
+                                            <GradientStop x:Name="GlowStop" Offset="1.5" Color="#FF61EEEE"/>
+                                            <GradientStop x:Name="RightStop" Offset="2" Color="#FF0B9393"/>
+                                        </LinearGradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Canvas.Background>
+                            </Canvas>
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsChecked" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="IdleEmblem" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="IdleEmblem" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverBackground" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="HoverEmblem" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="LeftStop" Storyboard.TargetProperty="Offset" From="1" To="-2" Duration="0:0:1" BeginTime="0:0:0.25" EasingFunction="{StaticResource StartGlowQuinticEase}"/>
+                                        <DoubleAnimation Storyboard.TargetName="GlowStop" Storyboard.TargetProperty="Offset" From="1.5" To="-1.5" Duration="0:0:1" BeginTime="0:0:0.25" EasingFunction="{StaticResource StartGlowQuinticEase}"/>
+                                        <DoubleAnimation Storyboard.TargetName="RightStop" Storyboard.TargetProperty="Offset" From="2" To="-1" Duration="0:0:1" BeginTime="0:0:0.25" EasingFunction="{StaticResource StartGlowQuinticEase}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverBackground" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="HoverEmblem" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="LeftStop" Storyboard.TargetProperty="Offset" To="1" Duration="0:0:0"/>
+                                        <DoubleAnimation Storyboard.TargetName="GlowStop" Storyboard.TargetProperty="Offset" To="1.5" Duration="0:0:0"/>
+                                        <DoubleAnimation Storyboard.TargetName="RightStop" Storyboard.TargetProperty="Offset" To="2" Duration="0:0:0"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="PressedBackground" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="HoverEmblem" Property="Visibility" Value="Hidden"/>
+                            <!--Setter TargetName="IdleEmblem" Property="Visibility" Value="Visible"/-->
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <QuinticEase x:Key="MenuAnimationEase" EasingMode="EaseOut"/>
+
+    <Style x:Key="WindowStyle" TargetType="{x:Type local:QuadContentWindow}">
+        <Setter Property="WindowStyle" Value="None"/>
+        <Setter Property="AllowsTransparency" Value="True"/>
+        <Setter Property="Background" Value="{x:Static SystemColors.ActiveBorderBrush}"/>
+        <Setter Property="ResizeMode" Value="NoResize"/>
+        <!--WindowStyle="None" AllowsTransparency="True" Background="Transparent" ResizeMode="NoResize"-->
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:QuadContentWindow}">
+                    <Grid>
+                        <Grid x:Name="RootGrid" Background="{TemplateBinding Background}">
+                            <Border Grid.ColumnSpan="2" Grid.RowSpan="3" BorderBrush="#7F000000" BorderThickness="1" Background="Transparent">
+                                <Grid Margin="8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="256"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="88"/>
+                                    </Grid.RowDefinitions>
+                                    <ContentControl x:Name="FirstContentControl" Content="{TemplateBinding Content}" Grid.Column="1" Grid.RowSpan="2" Margin="-10,0,0,0"/>
+                                    <ContentControl Content="{TemplateBinding SecondContent}" Margin="-10,0,16,0"/>
+                                    <ContentControl Content="{TemplateBinding ThirdContent}" Grid.Row="1" Margin="0,10,16,0"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsManipulationEnabled" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ThicknessAnimation Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Margin" To="0" Duration="0:0:0.25" EasingFunction="{StaticResource MenuAnimationEase}"/>
+                                        <ThicknessAnimation Storyboard.TargetName="FirstContentControl" Storyboard.TargetProperty="Margin" From="-10,25,0,-25" To="-10,0,0,0" BeginTime="0:0:0.0625" Duration="0:0:0.375" EasingFunction="{StaticResource MenuAnimationEase}"/>
+                                        <DoubleAnimation Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ThicknessAnimation Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Margin" To="0,50,0,-50" Duration="0:0:0.25" EasingFunction="{StaticResource MenuAnimationEase}"/>
+                                        <ThicknessAnimation Storyboard.TargetName="FirstContentControl" Storyboard.TargetProperty="Margin" To="-10,25,0,-25" BeginTime="0:0:0" Duration="0:0:0.375" EasingFunction="{StaticResource MenuAnimationEase}"/>
+                                        <DoubleAnimation Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.125"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Storyboard x:Key="ShowMenu">
+        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OriginMenu" Storyboard.TargetProperty="Visibility">
+            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}"/>
+        </ObjectAnimationUsingKeyFrames>
+        <!--ThicknessAnimation Storyboard.TargetName="OriginMenu" Storyboard.TargetProperty="Margin" To="0" Duration="0:0:0.375" EasingFunction="{DynamicResource MenuAnimationEase}"/-->
+    </Storyboard>
+
+    <Storyboard x:Key="HideMenu">
+        <!--ThicknessAnimation Storyboard.TargetName="OriginMenu" Storyboard.TargetProperty="Margin" To="0,50,0,-50" Duration="0:0:0.375" EasingFunction="{DynamicResource MenuAnimationEase}"/-->
+        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OriginMenu" Storyboard.TargetProperty="Visibility">
+            <DiscreteObjectKeyFrame KeyTime="0:0:0.375" Value="{x:Static Visibility.Hidden}"/>
+        </ObjectAnimationUsingKeyFrames>
+    </Storyboard>
+
+    <Style x:Name="PlacesListViewStyle" TargetType="ListView">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="ItemContainerStyle" Value="{DynamicResource PlacesListViewItemStyle}"/>
+    </Style>
+
+    <Style x:Key="PlacesListViewItemStyle" TargetType="{x:Type apictrl:IconListViewItem}">
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="2"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type apictrl:IconListViewItem}">
+                    <Grid Background="#01000000">
+                        <Grid Margin="5,0,0,0">
+                            <Canvas x:Name="HoverBackground" Background="#7FFFFFFF" Visibility="Hidden"/>
+                            <StackPanel Orientation="Horizontal" Margin="{TemplateBinding Padding}">
+                                <!--Ellipse Width="32" Height="32" Stroke="LightGray" StrokeThickness="4">
+                                    <Ellipse.Fill>
+                                        <RadialGradientBrush Center="0.5,0.75" GradientOrigin="0.5,0.25" RadiusX="1" RadiusY="1">
+                                            <RadialGradientBrush.GradientStops>
+                                                <GradientStop Offset="0" Color="#FF35CEFA"/>
+                                                <GradientStop Offset="1" Color="#FF044B8D"/>
+                                            </RadialGradientBrush.GradientStops>
+                                        </RadialGradientBrush>
+                                    </Ellipse.Fill>
+                                </Ellipse-->
+                                <ContentPresenter x:Name="Icon" Content="{TemplateBinding Icon}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="6,0" Focusable="False"/>
+                                <ContentPresenter x:Name="ContentControl" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="0,0,6,0" Focusable="False"/>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="HoverBackground" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="LeftColumnTopSeparator" TargetType="Separator">
+        <Setter Property="Height" Value="1"/>
+        <Setter Property="Background" Value="#7FFFFFFF"/>
+    </Style>
+
+    <Style x:Key="LeftColumnMiddleSeparator" TargetType="Separator">
+        <Setter Property="Height" Value="1"/>
+        <Setter Property="Background" Value="#7FFFFFFF"/>
+    </Style>
+
+    <QuinticEase x:Key="TileScalingEase" EasingMode="EaseOut"/>
+
+    <Style x:Key="TileStyle" TargetType="{x:Type apictrl:IconButton}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type apictrl:IconButton}">
+                    <Grid>
+                        <apictrl:Planerator x:Name="Rotator" UseLayoutRounding="True">
+                            <Grid HorizontalAlignment="Stretch" Background="#01000000">
+                                <Grid x:Name="ScaleGrid" RenderTransformOrigin="0.5,0.5">
+                                    <Grid.RenderTransform>
+                                        <ScaleTransform x:Name="Scaler"/>
+                                    </Grid.RenderTransform>
+                                    <Canvas x:Name="HoverBackground" Margin="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FF555555" Visibility="Hidden"/>
+                                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding Background}" BorderThickness="1" Margin="4">
+                                        <Grid x:Name="ContentRoot">
+                                            <Grid.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                    <LinearGradientBrush.GradientStops>
+                                                        <GradientStop Offset="0" Color="#40000000"/>
+                                                        <GradientStop Offset="1" Color="#20000000"/>
+                                                    </LinearGradientBrush.GradientStops>
+                                                </LinearGradientBrush>
+                                            </Grid.Background>
+                                            <ContentControl x:Name="TitleControl" Content="{TemplateBinding Content}" Margin="16,8" Foreground="{TemplateBinding Foreground}" Focusable="False" IsTabStop="False" Opacity="1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                            <ContentControl x:Name="IconControl" Content="{TemplateBinding Icon}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="56" Height="56" Focusable="False" IsTabStop="False" />
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </Grid>
+                        </apictrl:Planerator>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="HoverBackground" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Rotator" Storyboard.TargetProperty="RotationX" To="3.0625" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Rotator" Storyboard.TargetProperty="RotationX" To="0" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsPressed" Value="True"/>
+                                <Condition Property="Width" Value="64"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleX" To="0.975" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                        <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleY" To="0.975" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleX" To="1" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                        <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleY" To="1" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsPressed" Value="True"/>
+                                <Condition Property="Width" Value="128"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleX" To="0.975" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                        <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleY" To="0.975" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleX" To="1" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                        <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleY" To="1" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsPressed" Value="True"/>
+                                <Condition Property="Width" Value="256"/>
+                                <!--Condition Property="Width" Value="128"/-->
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleX" To="0.9875" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                        <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleY" To="0.9875" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleX" To="1" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                        <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleY" To="1" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+                        <Trigger Property="Height" Value="256">
+                            <!--Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleX" To="0.975" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                        <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleY" To="0.975" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleX" To="1" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                        <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleY" To="1" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions-->
+                            <Setter TargetName="ScaleGrid" Property="RenderTransformOrigin" Value="0.5,0.75"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="ContentRoot" Property="Opacity" Value="0.75"/>
+                        </Trigger>
+                        <Trigger Property="VerticalContentAlignment" Value="Top">
+                            <Setter TargetName="IconControl" Property="Width" Value="32"/>
+                            <Setter TargetName="IconControl" Property="Height" Value="32"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SmallTileStyle" TargetType="{x:Type apictrl:IconButton}" BasedOn="{StaticResource TileStyle}">
+        <Setter Property="Width" Value="64"/>
+        <Setter Property="Height" Value="64"/>
+        <Setter Property="Foreground" Value="Transparent" />
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+    </Style>
+
+    <Style x:Key="MediumTileStyle" TargetType="{x:Type apictrl:IconButton}" BasedOn="{StaticResource TileStyle}">
+        <Setter Property="Width" Value="128"/>
+        <Setter Property="Height" Value="128"/>
+    </Style>
+
+    <Style x:Key="WideTileStyle" TargetType="{x:Type apictrl:IconButton}" BasedOn="{StaticResource TileStyle}">
+        <Setter Property="Width" Value="256"/>
+        <Setter Property="Height" Value="128"/>
+    </Style>
+
+    <Style x:Key="LargeTileStyle" TargetType="{x:Type apictrl:IconButton}" BasedOn="{StaticResource TileStyle}">
+        <Setter Property="Width" Value="256"/>
+        <Setter Property="Height" Value="256"/>
+    </Style>
+
+    <Style x:Key="TopButtonStyle" TargetType="Button">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="4,0" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#01000000">
+                        <Canvas x:Name="HoverBackground" Background="#7FFFFFFF" Visibility="Hidden"/>
+                        <ContentControl x:Name="ContentControl" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False" IsTabStop="False" Foreground="{TemplateBinding Foreground}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="HoverBackground" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="PowerButtonStyle" TargetType="Button" BasedOn="{StaticResource TopButtonStyle}">
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Content">
+            <Setter.Value>
+                <Grid Width="14" Height="14">
+                    <Rectangle Fill="White" Stroke="Transparent" StrokeThickness="0" Width="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,-2" Height="10"/>
+                    <Ellipse Fill="Transparent" Stroke="White" StrokeThickness="2">
+                        <Ellipse.OpacityMask>
+                            <RadialGradientBrush Center="0.5,0" GradientOrigin="0.5,0">
+                                <RadialGradientBrush.GradientStops>
+                                    <GradientStop Offset="0.46875" Color="Transparent"/>
+                                    <GradientStop Offset="0.46875" Color="Black"/>
+                                </RadialGradientBrush.GradientStops>
+                            </RadialGradientBrush>
+                        </Ellipse.OpacityMask>
+                    </Ellipse>
+                </Grid>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="UserButtonStyle" TargetType="Button" BasedOn="{StaticResource TopButtonStyle}">
+        <Setter Property="Margin" Value="6,0,0,0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Content">
+            <Setter.Value>
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle x:Name="UserAvatar" Width="26" Height="26" Stroke="Transparent" StrokeThickness="0">
+                        <Rectangle.Fill>
+                            <LinearGradientBrush StartPoint="0.25,0" EndPoint="0.75,1">
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStop Offset="0" Color="Red"/>
+                                    <GradientStop Offset="1" Color="Green"/>
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock Text="{x:Static sys:Environment.UserName}" Foreground="White" FontSize="18" FontFamily="Segoe UI" TextAlignment="Left" VerticalAlignment="Center" Margin="3,0"/>
+                </StackPanel>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TileItemsControlStyle" TargetType="{x:Type ItemsControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ItemsControl}">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}" 
+                                    Background="{TemplateBinding Background}" 
+                                    Padding="{TemplateBinding Padding}"
+                                    SnapsToDevicePixels="True">
+                        <ScrollViewer x:Name="Scroller" CanContentScroll="True" 
+                                              HorizontalScrollBarVisibility="Disabled"
+                                              VerticalScrollBarVisibility="Hidden">
+                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </ScrollViewer>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Scroller" Property="VerticalScrollBarVisibility" Value="Auto"/>
+                            <Setter TargetName="Scroller" Property="Padding" Value="0,0,-17,0"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="AllAppsButtonStyle" TargetType="ToggleButton">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#01000000">
+                        <Grid>
+                            <Canvas x:Name="HoverBackground" Background="#7FFFFFFF" Visibility="Hidden"/>
+                            <StackPanel Orientation="Horizontal" Margin="{TemplateBinding Padding}">
+                                <Grid Margin="{TemplateBinding Padding}">
+                                    <Grid.RenderTransform>
+                                        <TranslateTransform X="-2.6397072" Y="-3.08512825"/>
+                                    </Grid.RenderTransform>
+                                    <Path x:Name="AllAppsArrow" Data="m 16.532162 10.699497 v -0.03752 L 12.237363 6.1702565 H 9.1241024 L 12.396777 9.5179493 H 5.2794144 v 2.3255677 h 7.1173626 l -3.2726746 3.347692 h 3.1132606 z" VerticalAlignment="Center" Margin="10,0" Opacity="1" Fill="White"/>
+                                    <Path x:Name="BackArrow" Data="m 5.2794144 10.699497 v -0.03752 L 9.5742134 6.1702565 H 12.687474 L 9.4147994 9.5179493 H 16.532162 V 11.843517 H 9.4147994 l 3.2726746 3.347692 H 9.5742134 Z" VerticalAlignment="Center" Margin="10,0" Opacity="0" Fill="White"/>
+                                </Grid>
+                                <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="-4,0,6,0">
+                                    <ContentControl x:Name="AllAppsControl" Content="All Apps" Focusable="False" IsTabStop="False" Opacity="1" Foreground="White"/>
+                                    <ContentControl x:Name="BackControl" Content="Bacc" Focusable="False" IsTabStop="False" Opacity="0" Foreground="White"/>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="HoverBackground" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="AllAppsControl" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.125" />
+                                        <DoubleAnimation Storyboard.TargetName="BackControl" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                        <DoubleAnimation Storyboard.TargetName="AllAppsArrow" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.125" />
+                                        <DoubleAnimation Storyboard.TargetName="BackArrow" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="AllAppsControl" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                        <DoubleAnimation Storyboard.TargetName="BackControl" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.125" />
+                                        <DoubleAnimation Storyboard.TargetName="AllAppsArrow" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                        <DoubleAnimation Storyboard.TargetName="BackArrow" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ContentControl" Storyboard.TargetProperty="Opacity" To="0.75" Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ContentControl" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,52 @@
+﻿<local:QuadContentWindow x:Class="OriginMenu.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OriginMenu"
+        xmlns:apictrl="clr-namespace:Start9.Api.Controls;assembly=Start9.Api"
+        xmlns:objctrl="clr-namespace:Start9.Api.Objects.Controls;assembly=Start9.Api"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        Title="MainWindow" Height="520" Width="520" Style="{DynamicResource WindowStyle}" x:Name="OriginMenu" Topmost="True" Loaded="OriginMenu_Loaded">
+    <local:QuadContentWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/OriginMenu;component/DefaultSkin.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </local:QuadContentWindow.Resources>
+    <local:QuadContentWindow.SecondContent>
+        <DockPanel>
+            <DockPanel DockPanel.Dock="Top" Height="Auto">
+                <Button x:Name="PowerButton" Style="{DynamicResource PowerButtonStyle}" DockPanel.Dock="Right"/>
+                <Button x:Name="UserButton" Style="{DynamicResource UserButtonStyle}"/>
+            </DockPanel>
+            <StackPanel Orientation="Vertical">
+                <Separator Style="{DynamicResource LeftColumnTopSeparator}"/>
+                <ListView x:Name="PlacesListView" ItemsSource="{Binding Places}"/>
+                <Separator Style="{DynamicResource LeftColumnMiddleSeparator}"/>
+                <ListView x:Name="LastUsedListView" ItemsSource="{Binding LastUsed}"/>
+            </StackPanel>
+        </DockPanel>
+    </local:QuadContentWindow.SecondContent>
+    <local:QuadContentWindow.ThirdContent>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <ToggleButton x:Name="AllAppsButton" Style="{DynamicResource AllAppsButtonStyle}"/>
+            <TextBox Grid.Row="1">Search Everywhere</TextBox>
+        </Grid>
+    </local:QuadContentWindow.ThirdContent>
+    <Grid>
+        <ItemsControl ItemsSource="{Binding PinnedItems}" Style="{DynamicResource TileItemsControlStyle}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <objctrl:VariableSizedWrapGrid Orientation="Horizontal" LatchItemSize="False" StrictItemOrder="False"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+    </Grid>
+</local:QuadContentWindow>
