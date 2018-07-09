@@ -21,6 +21,7 @@ using Start9.Api.DiskItems;
 using static Start9.Api.SystemContext;
 using static Start9.Api.SystemScaling;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace OriginMenu
 {
@@ -29,175 +30,80 @@ namespace OriginMenu
     /// </summary>
     public partial class MainWindow : Window
     {
-        String pinnedPath = Environment.ExpandEnvironmentVariables(@"%appdata%\Start9\TempData\OriginMenu_PinnedApps.txt");
-        String placesPath = Environment.ExpandEnvironmentVariables(@"%appdata%\Start9\TempData\OriginMenu_Places.txt");
-        String lastUsedPath = Environment.ExpandEnvironmentVariables(@"%appdata%\Start9\TempData\OriginMenu_LastUsed.txt");
+        String _pinnedPath = Environment.ExpandEnvironmentVariables(@"%appdata%\Start9\TempData\OriginMenu_PinnedApps.txt");
+        String _placesPath = Environment.ExpandEnvironmentVariables(@"%appdata%\Start9\TempData\OriginMenu_Places.txt");
+        String _lastUsedPath = Environment.ExpandEnvironmentVariables(@"%appdata%\Start9\TempData\OriginMenu_LastUsed.txt");
 
-        public List<IconButton> PinnedItems
+        public List<String> sizes = new List<String>();
+
+        public ObservableCollection<DiskItem> PinnedItems
         {
             get
             {
-                var list = new List<IconButton>();
-                foreach (var s in File.ReadAllLines(pinnedPath))
+                string[] pathStrings = File.ReadAllLines(_pinnedPath);
+                ObservableCollection<DiskItem> items = new ObservableCollection<DiskItem>();
+                sizes.Clear();
+                foreach (string s in pathStrings)
                 {
-                    String[] splitS = s.Split(';');
-                    var expS = Environment.ExpandEnvironmentVariables(splitS[0]);
-                    var item = new IconButton()
-                    {
-                        Content = Path.GetFileNameWithoutExtension(expS),
-                        Tag = expS
-                    };
-                    Debug.WriteLine(expS);
-                    if (File.Exists(expS))
-                    {
-                        item.Background = new SolidColorBrush(Colors.Cyan);
-                        item.Icon = new Canvas()
-                        {
-                            Background = (ImageBrush)(new DiskItemToIconImageBrushConverter().Convert(new DiskItem(expS), null, "1024", null)),
-                            HorizontalAlignment = HorizontalAlignment.Stretch,
-                            VerticalAlignment = VerticalAlignment.Stretch
-                        };
-                    }
-                    item.PreviewMouseLeftButtonUp += (sneder, args) =>
-                    {
-                        if (File.Exists(expS) | Directory.Exists(expS))
-                        {
-                            try
-                            {
-                                Process.Start(expS);
-                            }
-                            catch (System.ComponentModel.Win32Exception ex)
-                            {
-                                Debug.WriteLine(ex);
-                            }
-                        }
-                        else
-                        {
-                            Process.Start("cmd.exe", @"/C r" + s);
-                        }
-                        Hide();
-                    };
-
-                    switch (splitS[1].ToLower())
-                    {
-                        case "small":
-                            item.Style = (Style)Resources["SmallTileStyle"];
-                            break;
-                        case "wide":
-                            item.Style = (Style)Resources["WideTileStyle"];
-                            break;
-                        case "large":
-                            item.Style = (Style)Resources["LargeTileStyle"];
-                            break;
-                        default:
-                            item.Style = (Style)Resources["MediumTileStyle"];
-                            break;
-                    }
-
-                    list.Add(item);
+                    items.Add(new DiskItem(s.Substring(0, s.IndexOf(';'))));
+                    sizes.Add(s.Substring(s.IndexOf(';')));
                 }
-                return list;
+                return items;
             }
             set
             {
-                var list = new List<String>();
-                foreach (IconButton i in value)
+                List<string> pathStrings = new List<string>();
+                foreach (DiskItem d in value)
                 {
-                    var size = "medium";
-                    if (i.Style == (Style)Resources["SmallTileStyle"])
-                    {
-                        size = "small";
-                    }
-                    else if (i.Style == (Style)Resources["WideTileStyle"])
-                    {
-                        size = "wide";
-                    }
-                    else if (i.Style == (Style)Resources["LargeTileStyle"])
-                    {
-                        size = "large";
-                    }
-
-                    list.Add(i.Tag.ToString() + ";" + size);
+                    pathStrings.Add(d.ItemPath + sizes[value.IndexOf(d)]);
                 }
-                File.WriteAllLines(pinnedPath, list.ToArray());
+                File.WriteAllLines(_pinnedPath, pathStrings);
             }
         }
 
-        public List<IconListViewItem> Places
+        public ObservableCollection<DiskItem> Places
         {
             get
             {
-                var list = new List<IconListViewItem>();
-                foreach (var s in File.ReadAllLines(placesPath))
+                string[] pathStrings = File.ReadAllLines(_placesPath);
+                ObservableCollection<DiskItem> items = new ObservableCollection<DiskItem>();
+                foreach (string s in pathStrings)
                 {
-                    var expS = Environment.ExpandEnvironmentVariables(s);
-                    var item = GetListViewItem(expS);
-                    item.MouseLeftButtonUp += (sneder, args) =>
-                    {
-                        if (File.Exists(expS) | Directory.Exists(expS))
-                        {
-                            Process.Start(expS);
-                        }
-                        else
-                        {
-                            Process.Start("cmd.exe", @"/C " + s);
-                        }
-
-                        AddLastUsedEntry(s);
-
-                        Hide();
-                    };
-                    list.Add(item);
+                    items.Add(new DiskItem(s));
                 }
-                return list;
+                return items;
             }
             set
             {
-                var list = new List<String>();
-                foreach (var i in value)
+                List<string> pathStrings = new List<string>();
+                foreach (DiskItem d in value)
                 {
-                    list.Add(i.Tag.ToString());
+                    pathStrings.Add(d.ItemPath);
                 }
-                File.WriteAllLines(placesPath, list.ToArray());
+                File.WriteAllLines(_placesPath, pathStrings);
             }
         }
 
-        public List<IconListViewItem> LastUsed
+        public ObservableCollection<DiskItem> LastUsed
         {
             get
             {
-                var list = new List<IconListViewItem>();
-                foreach (var s in File.ReadAllLines(lastUsedPath))
+                string[] pathStrings = File.ReadAllLines(_lastUsedPath);
+                ObservableCollection<DiskItem> items = new ObservableCollection<DiskItem>();
+                foreach (string s in pathStrings)
                 {
-                    var expS = Environment.ExpandEnvironmentVariables(s);
-                    var item = GetListViewItem(expS);
-                    item.MouseLeftButtonUp += (sneder, args) =>
-                    {
-                        if (File.Exists(expS) | Directory.Exists(expS))
-                        {
-                            Process.Start(expS);
-                        }
-                        else
-                        {
-                            Process.Start("cmd.exe", @"/C " + s);
-                        }
-
-                        AddLastUsedEntry(s);
-
-                        Hide();
-                    };
-                    list.Add(item);
+                    items.Add(new DiskItem(s));
                 }
-                return list;
+                return items;
             }
             set
             {
-                var list = new List<String>();
-                foreach (var i in value)
+                List<string> pathStrings = new List<string>();
+                foreach (DiskItem d in value)
                 {
-                    list.Add(i.Tag.ToString());
+                    pathStrings.Add(d.ItemPath);
                 }
-                File.WriteAllLines(lastUsedPath, list.ToArray());
+                File.WriteAllLines(_lastUsedPath, pathStrings);
             }
         }
 
@@ -259,7 +165,7 @@ namespace OriginMenu
             Deactivated += delegate { Hide(); };
         }
 
-        public IconListViewItem GetListViewItem(String expS)
+        /*public IconListViewItem GetListViewItem(String expS)
         {
             var item = new IconListViewItem()
             {
@@ -276,23 +182,7 @@ namespace OriginMenu
                 };
             }
             return item;
-        }
-
-        public void AddLastUsedEntry(String path)
-        {
-            var expS = Environment.ExpandEnvironmentVariables(path);
-            for (var i = 0; i < LastUsed.Count; i++)
-            {
-                var it = (LastUsed[i] as IconListViewItem);
-                if ((it.Tag.ToString() == path) | (it.Tag.ToString() == expS))
-                {
-                    LastUsed.RemoveAt(i);
-                    i -= 1;
-                }
-            }
-
-            LastUsed.Insert(0, GetListViewItem(expS));
-        }
+        }*/
 
         new public void Show()
         {
@@ -369,6 +259,28 @@ namespace OriginMenu
                 CurrentMenuMode = MenuMode.AllApps;
             else
                 CurrentMenuMode = MenuMode.Normal;
+        }
+
+        private void PlacesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selected = PlacesListView.SelectedItem as DiskItem;
+
+            Process.Start(Environment.ExpandEnvironmentVariables(selected.ItemPath));
+
+            if (LastUsed.Contains(selected))
+            {
+                LastUsed.Remove(selected);
+            }
+            LastUsed.Insert(0, selected);
+            Hide();
+        }
+
+        private void LastUsedListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selected = LastUsedListView.SelectedItem as DiskItem;
+            LastUsed.Remove(selected);
+            LastUsed.Insert(0, selected);
+            Hide();
         }
     }
 }
