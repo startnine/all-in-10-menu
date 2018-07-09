@@ -10,8 +10,9 @@ namespace OriginMenu
 {
     public class ReceiverEntry : IReceiverEntry
     {
-        public ReceiverEntry(String name)
+        public ReceiverEntry(Type type, String name)
         {
+            Type = type;
             FriendlyName = name;
         }
 

@@ -46,12 +46,20 @@ namespace OriginMenu
         {
             StartMenuOpenedEntry.MessageReceived += (sender, e) =>
             {
-                ((MainWindow)Application.Current.MainWindow).Topmost = true;
-                ((MainWindow)Application.Current.MainWindow).Show();
+                ((MainWindow)Application.Current.MainWindow).DisplayMenu();
+                ((MainWindow)Application.Current.MainWindow).SearchBox.Text = String.Empty;
+            };
+
+            SearchResultsEntry.MessageReceived += (sender, e) =>
+            {
+                ((MainWindow)Application.Current.MainWindow).DisplayMenu();
+                ((MainWindow)Application.Current.MainWindow).SearchBox.Text = e.Message.Object.ToString();
             };
         }
-        public IList<IReceiverEntry> Entries => new[] { StartMenuOpenedEntry };
-        public IReceiverEntry StartMenuOpenedEntry { get; } = new ReceiverEntry("Open menu");
+        public IList<IReceiverEntry> Entries => new[] { StartMenuOpenedEntry, SearchResultsEntry };
+
+        public IReceiverEntry StartMenuOpenedEntry { get; } = new ReceiverEntry(typeof(DBNull), "Open menu");
+        public IReceiverEntry SearchResultsEntry { get; } = new ReceiverEntry(typeof(String), "Show search results");
     }
 
 

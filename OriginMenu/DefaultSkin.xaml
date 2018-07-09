@@ -458,7 +458,7 @@
                 <ControlTemplate TargetType="Button">
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#01000000">
                         <Canvas x:Name="HoverBackground" Background="#7FFFFFFF" Visibility="Hidden"/>
-                        <ContentControl x:Name="ContentControl" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False" IsTabStop="False" Foreground="{TemplateBinding Foreground}"/>
+                        <ContentControl x:Name="ContentControl" Content="{TemplateBinding Tag}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False" IsTabStop="False" Foreground="{TemplateBinding Foreground}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -472,7 +472,7 @@
 
     <Style x:Key="PowerButtonStyle" TargetType="Button" BasedOn="{StaticResource TopButtonStyle}">
         <Setter Property="Width" Value="40"/>
-        <Setter Property="Content">
+        <Setter Property="Tag">
             <Setter.Value>
                 <Grid Width="14" Height="14">
                     <Rectangle Fill="White" Stroke="Transparent" StrokeThickness="0" Width="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,-2" Height="10"/>
@@ -495,7 +495,7 @@
         <Setter Property="Margin" Value="6,0,0,0"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Content">
+        <Setter Property="Tag">
             <Setter.Value>
                 <StackPanel Orientation="Horizontal">
                     <Rectangle x:Name="UserAvatar" Width="26" Height="26" Stroke="Transparent" StrokeThickness="0">
@@ -514,7 +514,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="TileItemsControlStyle" TargetType="{x:Type ItemsControl}">
+    <Style x:Key="PinnedTilesItemsControlStyle" TargetType="{x:Type ItemsControl}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ItemsControl}">
@@ -540,7 +540,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="AllAppsButtonStyle" TargetType="ToggleButton">
+    <Style x:Key="AllAppsToggleButtonStyle" TargetType="ToggleButton">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="Black" />
@@ -615,6 +615,116 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="PowerMenuStyle" TargetType="{x:Type apictrl:TouchableContextMenu}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Grid.IsSharedSizeScope" Value="true" />
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="0,5,0,5"/>
+        <Setter Property="HasDropShadow" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type apictrl:TouchableContextMenu}">
+                    <ControlTemplate.Resources>
+                        <Style x:Key="{x:Type MenuItem}" TargetType="{x:Type MenuItem}">
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="Height" Value="40" />
+                            <Setter Property="Background" Value="#01000000" />
+                            <Setter Property="Foreground" Value="Black" />
+                            <Setter Property="FontFamily" Value="Segoe UI Semibold" />
+                            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Setter Property="FontSize" Value="15" />
+                            <Setter Property="FontStyle" Value="Normal" />
+                            <Setter Property="FontWeight" Value="Normal" />
+                            <Setter Property="BorderThickness" Value="0" />
+                            <Setter Property="BorderBrush" Value="#01000000" />
+                            <Setter Property="Padding" Value="21,15,21,15" />
+                            <Setter Property="Margin" Value="0,0,0,0" />
+                            <Style.Resources>
+                                <ControlTemplate x:Key="ImmersiveTopLevelItemTemplate" TargetType="MenuItem">
+                                    <Border Name="Border" Padding="20,0,27,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#01000000">
+                                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                            <ContentPresenter Name="Content" Margin="0" ContentSource="Header" RecognizesAccessKey="True" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                        </Grid>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsHighlighted" Value="true">
+                                            <Setter TargetName="Border" Property="Background" Value="#FFDEDEDE"/>
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="true">
+                                            <Setter TargetName="Border" Property="Background" Value="#FF4617B5"/>
+                                        </Trigger>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Foreground" Value="Gray"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+
+                                <ControlTemplate x:Key="ImmersiveTopLevelHeaderTemplate" TargetType="MenuItem">
+                                    <Border Name="Border" Padding="20,0,27,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#01000000">
+                                        <Grid>
+                                            <ContentPresenter Margin="0" ContentSource="Header" RecognizesAccessKey="True" VerticalAlignment="Center"/>
+                                            <Path Margin="-7" HorizontalAlignment="Right" VerticalAlignment="Center" Data="M 0 0 L 2 0 L 5 3 L 2 6 L 0 6 L 3 3 Z" Fill="{TemplateBinding Foreground}" />
+                                            <Popup Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsSubmenuOpen}" AllowsTransparency="True" Focusable="False" PopupAnimation="Fade">
+                                                <Border Name="SubmenuBorder" SnapsToDevicePixels="True" Background="White" BorderBrush="#FF2A2A2A" BorderThickness="2" Padding="0,5,0,5">
+                                                    <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
+                                                </Border>
+                                            </Popup>
+                                        </Grid>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsHighlighted" Value="true">
+                                            <Setter TargetName="Border" Property="Background" Value="#FFDEDEDE"/>
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="true">
+                                            <Setter TargetName="Border" Property="Background" Value="#FF4617B5"/>
+                                        </Trigger>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Foreground" Value="Gray"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Style.Resources>
+                            <Style.Triggers>
+                                <Trigger Property="Role" Value="TopLevelHeader">
+                                    <Setter Property="Template" Value="{StaticResource ImmersiveTopLevelHeaderTemplate}"/>
+                                    <Setter Property="Grid.IsSharedSizeScope" Value="true"/>
+                                </Trigger>
+                                <Trigger Property="Role" Value="TopLevelItem">
+                                    <Setter Property="Template" Value="{StaticResource ImmersiveTopLevelItemTemplate}"/>
+                                </Trigger>
+                                <Trigger Property="Role" Value="SubmenuHeader">
+                                    <Setter Property="Template" Value="{StaticResource ImmersiveTopLevelHeaderTemplate}"/>
+                                </Trigger>
+                                <Trigger Property="Role" Value="SubmenuItem">
+                                    <Setter Property="Template" Value="{StaticResource ImmersiveTopLevelItemTemplate}"/>
+                                </Trigger>
+                                <Trigger Property="IsHighlighted" Value="True">
+                                    <Setter Property="Background" Value="#FFDEDEDE"/>
+                                    <Setter Property="BorderThickness" Value="0" />
+                                    <Setter Property="BorderBrush" Value="Transparent" />
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="#FF4617B5"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                    <Setter Property="BorderThickness" Value="0" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ControlTemplate.Resources>
+                    <Border x:Name="Border" Background="White" BorderBrush="#FF2A2A2A" BorderThickness="2" CornerRadius="0" Padding="0,5,0,5">
+                        <StackPanel IsItemsHost="True"
+                      KeyboardNavigation.DirectionalNavigation="Cycle" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="UserMenuStyle" TargetType="{x:Type apictrl:TouchableContextMenu}" BasedOn="{StaticResource PowerMenuStyle}">
+        <Setter Property="Width" Value="278"/>
     </Style>
 
 </ResourceDictionary>
