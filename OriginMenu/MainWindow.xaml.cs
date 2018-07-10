@@ -34,6 +34,9 @@ namespace OriginMenu
         String _placesPath = Environment.ExpandEnvironmentVariables(@"%appdata%\Start9\TempData\OriginMenu_Places.txt");
         String _lastUsedPath = Environment.ExpandEnvironmentVariables(@"%appdata%\Start9\TempData\OriginMenu_LastUsed.txt");
 
+        String _appDataAllAppsDir = Environment.ExpandEnvironmentVariables(@"%appdata%\Microsoft\Windows\Start Menu\Programs");
+        String _programDataAllAppsDir = Environment.ExpandEnvironmentVariables(@"%programdata%\Microsoft\Windows\Start Menu\Programs");
+
         public List<String> sizes = new List<String>();
 
         public ObservableCollection<DiskItem> PinnedItems
@@ -107,6 +110,40 @@ namespace OriginMenu
             }
         }
 
+        public ObservableCollection<DiskItem> AllApps
+        {
+            get
+            {
+                IEnumerable<String> appDataFolderPathStrings = Directory.EnumerateDirectories(_appDataAllAppsDir);
+                IEnumerable<String> programDataFolderPathStrings = Directory.EnumerateDirectories(_programDataAllAppsDir);
+                ObservableCollection<DiskItem> items = new ObservableCollection<DiskItem>();
+                sizes.Clear();
+
+                foreach (string s in appDataFolderPathStrings)
+                {
+                    items.Add(new DiskItem(s));
+                }
+                foreach (string s in programDataFolderPathStrings)
+                {
+                    items.Add(new DiskItem(s));
+                }
+
+                IEnumerable<String> appDataFilePathStrings = Directory.EnumerateFiles(_appDataAllAppsDir);
+                IEnumerable<String> programDataFilePathStrings = Directory.EnumerateFiles(_programDataAllAppsDir);
+
+                foreach (string s in appDataFilePathStrings)
+                {
+                    items.Add(new DiskItem(s));
+                }
+                foreach (string s in programDataFilePathStrings)
+                {
+                    items.Add(new DiskItem(s));
+                }
+
+                return items;
+            }
+        }
+
         public enum MenuMode
         {
             Normal,
@@ -148,11 +185,19 @@ namespace OriginMenu
 
             if ((sender as MainWindow).CurrentMenuMode == MenuMode.AllApps)
             {
-                (sender as MainWindow).AllAppsTreeView.Visibility = Visibility.Hidden;
+                (sender as MainWindow).AllAppsTreeView.Visibility = Visibility.Visible;
+                if ((sender as MainWindow).AllAppsToggleButton.IsChecked != true)
+                {
+                    (sender as MainWindow).AllAppsToggleButton.IsChecked = true;
+                }
             }
             else
             {
                 (sender as MainWindow).AllAppsTreeView.Visibility = Visibility.Hidden;
+                if ((sender as MainWindow).AllAppsToggleButton.IsChecked != false)
+                {
+                    (sender as MainWindow).AllAppsToggleButton.IsChecked = false;
+                }
             }
         }
 
@@ -281,6 +326,19 @@ namespace OriginMenu
             LastUsed.Remove(selected);
             LastUsed.Insert(0, selected);
             Hide();
+        }
+
+        private void AllAppsTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            var selected = (AllAppsTreeView.SelectedItem as DiskItem);
+
+            Process.Start(Environment.ExpandEnvironmentVariables(selected.ItemPath));
+
+            if (LastUsed.Contains(selected))
+            {
+                LastUsed.Remove(selected);
+            }
+            LastUsed.Insert(0, selected);
         }
     }
 }

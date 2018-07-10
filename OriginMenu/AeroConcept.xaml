@@ -1284,4 +1284,19 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <HierarchicalDataTemplate x:Key="AllAppsItemDataTemplate" DataType="{x:Type disk:DiskItem}" ItemsSource="{Binding SubItems}" ItemContainerStyle="{StaticResource {x:Type TreeViewItem}}">
+        <DockPanel Margin="0,2">
+            <Canvas Width="16" Height="16" DockPanel.Dock="Left" Margin="0,0,8,0" Background="Gray"/><!-->
+                <Canvas.Background>
+                    <Binding ConverterParameter="16">
+                        <Binding.Converter>
+                            <disk:DiskItemToIconImageBrushConverter/>
+                        </Binding.Converter>
+                    </Binding>
+                </Canvas.Background>
+            </Canvas-->
+            <TextBlock Text="{Binding ItemName}"/>
+        </DockPanel>
+    </HierarchicalDataTemplate>
 </ResourceDictionary>

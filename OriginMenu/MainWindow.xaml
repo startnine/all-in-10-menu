@@ -80,7 +80,7 @@
             <ListView x:Name="LastUsedListView" ItemsSource="{Binding LastUsed}" ItemContainerStyle="{DynamicResource PlacesListViewItemStyle}" ItemTemplate="{DynamicResource PinnedItemDataTemplate}" SelectionMode="Single" SelectionChanged="LastUsedListView_SelectionChanged"/>
         </StackPanel>
         <ListView x:Name="SearchListView" Grid.Column="0" Grid.RowSpan="2" Visibility="Hidden"/>
-        <TreeView x:Name="AllAppsTreeView" Grid.Column="0" Grid.RowSpan="2" Visibility="Hidden"/>
+        <TreeView x:Name="AllAppsTreeView" Grid.Column="0" Grid.RowSpan="2" ItemsSource="{Binding AllApps}" ItemTemplate="{DynamicResource AllAppsItemDataTemplate}" Visibility="Hidden" SelectedItemChanged="AllAppsTreeView_SelectedItemChanged"/>
         <Grid Grid.Column="0" Grid.Row="2">
             <Grid.RowDefinitions>
                 <RowDefinition/>

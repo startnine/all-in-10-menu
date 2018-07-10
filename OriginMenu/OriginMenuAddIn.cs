@@ -48,6 +48,7 @@ namespace OriginMenu
             {
                 ((MainWindow)Application.Current.MainWindow).DisplayMenu();
                 ((MainWindow)Application.Current.MainWindow).SearchBox.Text = String.Empty;
+                ((MainWindow)Application.Current.MainWindow).CurrentMenuMode = MainWindow.MenuMode.Normal;
             };
 
             SearchResultsEntry.MessageReceived += (sender, e) =>
