@@ -60,6 +60,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ContractImpl.cs" />
+    <Compile Include="Converters.cs" />
     <Compile Include="QuadContentWindow.cs" />
     <Compile Include="OriginMenuAddIn.cs" />
     <Page Include="AeroConcept.xaml">

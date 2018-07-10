@@ -161,6 +161,11 @@ namespace OriginMenu
         public static readonly DependencyProperty CurrentMenuModeProperty =
             DependencyProperty.Register("CurrentMenuMode", typeof(MenuMode), typeof(MainWindow), new PropertyMetadata(MenuMode.Normal, OnCurrentMenuModePropertyChangedCallback));
 
+        public double RightColumnWidth
+        {
+            get => PinnedItemsListView.ActualWidth;
+        }
+
         public static void OnCurrentMenuModePropertyChangedCallback(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             if (((sender as MainWindow).CurrentMenuMode == MenuMode.Normal) | ((sender as MainWindow).CurrentMenuMode == MenuMode.LeftColumnJumpList))
@@ -172,6 +177,15 @@ namespace OriginMenu
             {
                 (sender as MainWindow).TopButtonsDockPanel.Visibility = Visibility.Hidden;
                 (sender as MainWindow).LeftColumnBody.Visibility = Visibility.Hidden;
+            }
+
+            if (((sender as MainWindow).CurrentMenuMode == MenuMode.Search) || ((sender as MainWindow).CurrentMenuMode == MenuMode.LeftColumnJumpList))
+            {
+                (sender as MainWindow).PinnedItemsListView.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                (sender as MainWindow).PinnedItemsListView.Visibility = Visibility.Visible;
             }
 
             if ((sender as MainWindow).CurrentMenuMode == MenuMode.Search)
@@ -237,6 +251,7 @@ namespace OriginMenu
 
         new public void Hide()
         {
+            CurrentMenuMode = MenuMode.Normal;
             IsManipulationEnabled = false;
             //BeginStoryboard(board);
         }
