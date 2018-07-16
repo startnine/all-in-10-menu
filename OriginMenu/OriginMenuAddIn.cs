@@ -47,14 +47,14 @@ namespace OriginMenu
             StartMenuOpenedEntry.MessageReceived += (sender, e) =>
             {
                 ((MainWindow)Application.Current.MainWindow).DisplayMenu();
-                ((MainWindow)Application.Current.MainWindow).SearchBox.Text = String.Empty;
+                ((MainWindow)Application.Current.MainWindow).SearchTextBox.Text = String.Empty;
                 ((MainWindow)Application.Current.MainWindow).CurrentMenuMode = MainWindow.MenuMode.Normal;
             };
 
             SearchResultsEntry.MessageReceived += (sender, e) =>
             {
                 ((MainWindow)Application.Current.MainWindow).DisplayMenu();
-                ((MainWindow)Application.Current.MainWindow).SearchBox.Text = e.Message.Object.ToString();
+                ((MainWindow)Application.Current.MainWindow).SearchTextBox.Text = e.Message.Object.ToString();
             };
         }
         public IList<IReceiverEntry> Entries => new[] { StartMenuOpenedEntry, SearchResultsEntry };

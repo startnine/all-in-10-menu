@@ -168,49 +168,50 @@ namespace OriginMenu
 
         public static void OnCurrentMenuModePropertyChangedCallback(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            if (((sender as MainWindow).CurrentMenuMode == MenuMode.Normal) | ((sender as MainWindow).CurrentMenuMode == MenuMode.LeftColumnJumpList))
+            var main = (sender as MainWindow);
+            if ((main.CurrentMenuMode == MenuMode.Normal) | (main.CurrentMenuMode == MenuMode.LeftColumnJumpList))
             {
-                (sender as MainWindow).TopButtonsDockPanel.Visibility = Visibility.Visible;
-                (sender as MainWindow).LeftColumnBody.Visibility = Visibility.Visible;
+                main.TopButtonsDockPanel.Visibility = Visibility.Visible;
+                main.LeftColumnBody.Visibility = Visibility.Visible;
             }
             else
             {
-                (sender as MainWindow).TopButtonsDockPanel.Visibility = Visibility.Hidden;
-                (sender as MainWindow).LeftColumnBody.Visibility = Visibility.Hidden;
+                main.TopButtonsDockPanel.Visibility = Visibility.Hidden;
+                main.LeftColumnBody.Visibility = Visibility.Hidden;
             }
 
-            if (((sender as MainWindow).CurrentMenuMode == MenuMode.Search) || ((sender as MainWindow).CurrentMenuMode == MenuMode.LeftColumnJumpList))
+            if ((main.CurrentMenuMode == MenuMode.Search) || (main.CurrentMenuMode == MenuMode.LeftColumnJumpList))
             {
-                (sender as MainWindow).PinnedItemsListView.Visibility = Visibility.Hidden;
+                main.PinnedItemsListView.Visibility = Visibility.Hidden;
             }
             else
             {
-                (sender as MainWindow).PinnedItemsListView.Visibility = Visibility.Visible;
+                main.PinnedItemsListView.Visibility = Visibility.Visible;
             }
 
-            if ((sender as MainWindow).CurrentMenuMode == MenuMode.Search)
+            if (main.CurrentMenuMode == MenuMode.Search)
             {
-                (sender as MainWindow).SearchListView.Visibility = Visibility.Visible;
+                main.SearchListView.Visibility = Visibility.Visible;
             }
             else
             {
-                (sender as MainWindow).SearchListView.Visibility = Visibility.Hidden;
+                main.SearchListView.Visibility = Visibility.Hidden;
             }
 
-            if ((sender as MainWindow).CurrentMenuMode == MenuMode.AllApps)
+            if (main.CurrentMenuMode == MenuMode.AllApps)
             {
-                (sender as MainWindow).AllAppsTreeView.Visibility = Visibility.Visible;
-                if ((sender as MainWindow).AllAppsToggleButton.IsChecked != true)
+                main.AllAppsTreeView.Visibility = Visibility.Visible;
+                if (main.AllAppsToggleButton.IsChecked != true)
                 {
-                    (sender as MainWindow).AllAppsToggleButton.IsChecked = true;
+                    main.AllAppsToggleButton.IsChecked = true;
                 }
             }
             else
             {
-                (sender as MainWindow).AllAppsTreeView.Visibility = Visibility.Hidden;
-                if ((sender as MainWindow).AllAppsToggleButton.IsChecked != false)
+                main.AllAppsTreeView.Visibility = Visibility.Hidden;
+                if (main.AllAppsToggleButton.IsChecked != false)
                 {
-                    (sender as MainWindow).AllAppsToggleButton.IsChecked = false;
+                    main.AllAppsToggleButton.IsChecked = false;
                 }
             }
         }
@@ -218,11 +219,21 @@ namespace OriginMenu
         public MainWindow()
         {
             InitializeComponent();
+            //OnSkinAppliedOrSomethingIdfk();
             Left = 0;
             Top = SystemParameters.WorkArea.Bottom - Height;
 
             Deactivated += delegate { Hide(); };
-        }
+        }/*
+
+        public void OnSkinAppliedOrSomethingIdfk()
+        {
+            ((Style)((Style)this.Resources["PinnedTilesListViewStyle"]).Resources[typeof(ListViewItem)]).Setters.Add(new EventSetter()
+            {
+                Event = ListView.PreviewMouseLeftButtonDownEvent,
+                Handler = new MouseButtonEventHandler(Tile_PreviewMouseLeftButtonDown)
+            });
+        }*/
 
         /*public IconListViewItem GetListViewItem(String expS)
         {
@@ -269,7 +280,7 @@ namespace OriginMenu
             Show();
             Focus();
             Activate();
-            SearchBox.Focus();
+            SearchTextBox.Focus();
         }
 
         private void TopButton_Click(object sender, RoutedEventArgs e)
@@ -305,9 +316,9 @@ namespace OriginMenu
             (sender as Button).ContextMenu.IsOpen = false;
         }
 
-        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (String.IsNullOrWhiteSpace(SearchBox.Text))
+            if (String.IsNullOrWhiteSpace(SearchTextBox.Text))
                 CurrentMenuMode = MenuMode.Normal;
             else
                 CurrentMenuMode = MenuMode.Search;
@@ -323,15 +334,18 @@ namespace OriginMenu
 
         private void PlacesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selected = PlacesListView.SelectedItem as DiskItem;
+            var selected = (sender as ListView).SelectedItem as DiskItem;
 
-            Process.Start(Environment.ExpandEnvironmentVariables(selected.ItemPath));
+            try { Process.Start(Environment.ExpandEnvironmentVariables(selected.ItemPath)); } catch (Exception ex) { Debug.WriteLine(ex); }
 
             if (LastUsed.Contains(selected))
             {
                 LastUsed.Remove(selected);
             }
             LastUsed.Insert(0, selected);
+
+            (sender as ListView).SelectedItem = null;
+
             Hide();
         }
 
@@ -354,6 +368,37 @@ namespace OriginMenu
                 LastUsed.Remove(selected);
             }
             LastUsed.Insert(0, selected);
+        }
+
+        private void Tile_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Start9.Api.Plex.MessageBox.Show(null, "IS  C L I C C", sender.ToString());
+        }
+
+        private void PinnedItemsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int interval = 0;
+            System.Timers.Timer timer = new System.Timers.Timer(250);
+
+            timer.Elapsed += (sneder, args) =>
+            {
+                Dispatcher.Invoke(new Action(() =>
+                {
+                    interval++;
+                    if (Mouse.LeftButton == MouseButtonState.Released)
+                    {
+                        timer.Stop();
+                        PlacesListView_SelectionChanged(sender, e);
+                    }
+                    else if (interval > 1)
+                    {
+                        timer.Stop();
+                        if (Mouse.LeftButton == MouseButtonState.Pressed)
+                            MessageBox.Show("This is where I would put my dragging logic. IF I HAD ANY!!",((sender as ListView).SelectedItem as DiskItem).ItemName);
+                    }
+                }));
+            };
+            timer.Start();
         }
     }
 }

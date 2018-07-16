@@ -745,239 +745,236 @@
     </Style>
 
     <Style x:Key="PinnedTilesListViewStyle" TargetType="{x:Type ListView}">
-        <Setter Property="Margin" Value="3,3,7,3"/>
-        <Setter Property="ItemContainerStyle">
-            <Setter.Value>
-                <Style TargetType="{x:Type ListViewItem}">
-                    <Setter Property="OverridesDefaultStyle" Value="True" />
-                    <Setter Property="Width" Value="256"/>
-                    <Setter Property="Height" Value="256"/>
-                    <Setter Property="Foreground" Value="White" />
-                    <Setter Property="BorderBrush" Value="Transparent" />
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                    <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-                    <Setter Property="Padding" Value="4"/>
-                    <Setter Property="Tag" Value="Medium"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                <Grid Margin="{TemplateBinding Padding}">
-                                    <Grid.RenderTransform>
-                                        <ScaleTransform x:Name="Scaler"/>
-                                    </Grid.RenderTransform>
-                                    <Rectangle x:Name="OuterGlowSize" Width="768"/>
-                                    <Rectangle x:Name="InnerGlowSize" Width="512"/>
-                                    <Border x:Name="BackBorder" Background="Black" BorderBrush="Black" BorderThickness="1" CornerRadius="3"/>
-                                    <Border x:Name="HoverBackground" CornerRadius="3" Visibility="Visible" Opacity="0" ClipToBounds="True">
-                                        <!--OpacityMask="{Binding OpacityMask, Source={x:Reference ShineGrid}}"-->
-                                        <Grid ClipToBounds="True">
-                                            <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{TemplateBinding Background}" Opacity="0.25"/>
-                                            <apictrl:Reveal HoverWidth="{Binding Width, Source={x:Reference InnerGlowSize}}" HoverHeight="{Binding Width, Source={x:Reference InnerGlowSize}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                                <apictrl:Reveal.Hover>
-                                                    <VisualBrush>
-                                                        <VisualBrush.Visual>
-                                                            <Grid Background="#01000000" Width="{Binding Width, Source={x:Reference InnerGlowSize}}" Height="{Binding Width, Source={x:Reference InnerGlowSize}}">
-                                                                <Grid.Effect>
-                                                                    <BlurEffect Radius="64" KernelType="Gaussian"/>
-                                                                </Grid.Effect>
-                                                                <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{TemplateBinding Background}">
-                                                                    <Ellipse.OpacityMask>
-                                                                        <RadialGradientBrush Center="0.5,0.5" GradientOrigin="0.5,0.5">
-                                                                            <RadialGradientBrush.GradientStops>
-                                                                                <GradientStop Offset="0.55" Color="Black"/>
-                                                                                <GradientStop Offset="1" Color="#7F000000"/>
-                                                                            </RadialGradientBrush.GradientStops>
-                                                                        </RadialGradientBrush>
-                                                                    </Ellipse.OpacityMask>
-                                                                </Ellipse>
-                                                                <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                                                    <Ellipse.Fill>
-                                                                        <RadialGradientBrush Center="0.5,0.5" GradientOrigin="0.5,0.5">
-                                                                            <RadialGradientBrush.GradientStops>
-                                                                                <GradientStop Offset="0" Color="White"/>
-                                                                                <GradientStop Offset="1" Color="#00FFFFFF"/>
-                                                                            </RadialGradientBrush.GradientStops>
-                                                                        </RadialGradientBrush>
-                                                                    </Ellipse.Fill>
-                                                                </Ellipse>
-                                                            </Grid>
-                                                        </VisualBrush.Visual>
-                                                    </VisualBrush>
-                                                </apictrl:Reveal.Hover>
-                                                <apictrl:Reveal.OpacityMask>
-                                                    <VisualBrush>
-                                                        <VisualBrush.Visual>
-                                                            <Grid Background="#01000000" ClipToBounds="True">
-                                                                <Border Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Background="#C0000000" BorderBrush="Transparent" BorderThickness="5" CornerRadius="3" UseLayoutRounding="True">
-                                                                    <Border.Effect>
-                                                                        <BlurEffect Radius="5" KernelType="Gaussian"/>
-                                                                    </Border.Effect>
-                                                                </Border>
-                                                            </Grid>
-                                                        </VisualBrush.Visual>
-                                                    </VisualBrush>
-                                                </apictrl:Reveal.OpacityMask>
-                                            </apictrl:Reveal>
-                                            <apictrl:Reveal HoverWidth="{Binding Width, Source={x:Reference OuterGlowSize}}" HoverHeight="{Binding Width, Source={x:Reference OuterGlowSize}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1">
-                                                <apictrl:Reveal.Hover>
-                                                    <VisualBrush>
-                                                        <VisualBrush.Visual>
-                                                            <Grid Background="#01000000" Width="{Binding Width, Source={x:Reference OuterGlowSize}}" Height="{Binding Width, Source={x:Reference OuterGlowSize}}">
-                                                                <Grid.Effect>
-                                                                    <BlurEffect Radius="128" KernelType="Gaussian"/>
-                                                                </Grid.Effect>
-                                                                <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{TemplateBinding Background}">
-                                                                    <Ellipse.OpacityMask>
-                                                                        <RadialGradientBrush Center="0.5,0.5" GradientOrigin="0.5,0.5">
-                                                                            <RadialGradientBrush.GradientStops>
-                                                                                <GradientStop Offset="0.55" Color="Black"/>
-                                                                                <GradientStop Offset="1" Color="#7F000000"/>
-                                                                            </RadialGradientBrush.GradientStops>
-                                                                        </RadialGradientBrush>
-                                                                    </Ellipse.OpacityMask>
-                                                                </Ellipse>
-                                                                <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                                                    <Ellipse.Fill>
-                                                                        <RadialGradientBrush Center="0.5,0.5" GradientOrigin="0.5,0.5">
-                                                                            <RadialGradientBrush.GradientStops>
-                                                                                <GradientStop Offset="0" Color="White"/>
-                                                                                <GradientStop Offset="1" Color="#00FFFFFF"/>
-                                                                            </RadialGradientBrush.GradientStops>
-                                                                        </RadialGradientBrush>
-                                                                    </Ellipse.Fill>
-                                                                </Ellipse>
-                                                            </Grid>
-                                                        </VisualBrush.Visual>
-                                                    </VisualBrush>
-                                                </apictrl:Reveal.Hover>
-                                                <apictrl:Reveal.OpacityMask>
-                                                    <VisualBrush>
-                                                        <VisualBrush.Visual>
-                                                            <Grid Background="#01000000" ClipToBounds="True">
-                                                                <Border Background="Transparent" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" BorderBrush="Black" BorderThickness="25" UseLayoutRounding="True" Margin="-18">
-                                                                    <Border.Effect>
-                                                                        <BlurEffect Radius="25" KernelType="Gaussian"/>
-                                                                    </Border.Effect>
-                                                                </Border>
-                                                            </Grid>
-                                                        </VisualBrush.Visual>
-                                                    </VisualBrush>
-                                                </apictrl:Reveal.OpacityMask>
-                                            </apictrl:Reveal>
-                                        </Grid>
-                                    </Border>
-                                    <Border BorderThickness="1">
-                                        <Grid x:Name="ContentRoot">
-                                            <ContentPresenter x:Name="PART_ContentPresenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Visibility="Hidden"/>
-                                            <GridViewRowPresenter x:Name="PART_GridViewRowPesenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Visibility="Visible" />
-                                        </Grid>
-                                    </Border>
-                                    <Grid x:Name="ShineGrid" ClipToBounds="True">
-                                        <Grid.OpacityMask>
-                                            <VisualBrush>
-                                                <VisualBrush.Visual>
-                                                    <Border Width="{Binding ActualWidth, Source={x:Reference BackBorder}}" Height="{Binding ActualHeight, Source={x:Reference BackBorder}}" Background="Black" BorderBrush="Transparent" BorderThickness="1" CornerRadius="3"/>
-                                                </VisualBrush.Visual>
-                                            </VisualBrush>
-                                        </Grid.OpacityMask>
-                                        <Grid.Background>
-                                            <VisualBrush>
-                                                <VisualBrush.Visual>
-                                                    <Border Width="{Binding ActualWidth, Source={x:Reference BackBorder}}" Height="{Binding ActualHeight, Source={x:Reference BackBorder}}" CornerRadius="3">
-                                                        <Border.Background>
-                                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                                                <LinearGradientBrush.GradientStops>
-                                                                    <GradientStop Offset="0" Color="#C0FFFFFF"/>
-                                                                    <GradientStop Offset="0.5" Color="#00FFFFFF"/>
-                                                                    <GradientStop Offset="0.75" Color="#00FFFFFF"/>
-                                                                    <GradientStop Offset="1" Color="#A0FFFFFF"/>
-                                                                </LinearGradientBrush.GradientStops>
-                                                            </LinearGradientBrush>
-                                                        </Border.Background>
-                                                        <Grid ClipToBounds="True" UseLayoutRounding="True">
+        <Style.Resources>
+            <Style x:Key="{x:Type ListViewItem}" TargetType="{x:Type ListViewItem}">
+                <Setter Property="OverridesDefaultStyle" Value="True" />
+                <Setter Property="Width" Value="256"/>
+                <Setter Property="Height" Value="256"/>
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="BorderBrush" Value="Transparent" />
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                <Setter Property="Padding" Value="4"/>
+                <Setter Property="Tag" Value="Medium"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                            <Grid Margin="{TemplateBinding Padding}">
+                                <Grid.RenderTransform>
+                                    <ScaleTransform x:Name="Scaler"/>
+                                </Grid.RenderTransform>
+                                <Rectangle x:Name="OuterGlowSize" Width="768"/>
+                                <Rectangle x:Name="InnerGlowSize" Width="512"/>
+                                <Border x:Name="BackBorder" Background="Black" BorderBrush="Black" BorderThickness="1" CornerRadius="3"/>
+                                <Border x:Name="HoverBackground" CornerRadius="3" Visibility="Visible" Opacity="0" ClipToBounds="True">
+                                    <!--OpacityMask="{Binding OpacityMask, Source={x:Reference ShineGrid}}"-->
+                                    <Grid ClipToBounds="True">
+                                        <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{TemplateBinding Background}" Opacity="0.25"/>
+                                        <apictrl:Reveal HoverWidth="{Binding Width, Source={x:Reference InnerGlowSize}}" HoverHeight="{Binding Width, Source={x:Reference InnerGlowSize}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                            <apictrl:Reveal.Hover>
+                                                <VisualBrush>
+                                                    <VisualBrush.Visual>
+                                                        <Grid Background="#01000000" Width="{Binding Width, Source={x:Reference InnerGlowSize}}" Height="{Binding Width, Source={x:Reference InnerGlowSize}}">
                                                             <Grid.Effect>
-                                                                <BlurEffect Radius="5" KernelType="Gaussian"/>
+                                                                <BlurEffect Radius="64" KernelType="Gaussian"/>
                                                             </Grid.Effect>
-                                                            <Border BorderBrush="#C0FFFFFF" BorderThickness="3,1,3,0" CornerRadius="3" Margin="-1"/>
-                                                            <Canvas Width="10" HorizontalAlignment="Left" Margin="6,4">
-                                                                <Canvas.Background>
-                                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                                        <LinearGradientBrush.GradientStops>
-                                                                            <GradientStop Offset="0" Color="#00FFFFFF"/>
-                                                                            <GradientStop Offset="0.125" Color="#C0FFFFFF"/>
+                                                            <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{TemplateBinding Background}">
+                                                                <Ellipse.OpacityMask>
+                                                                    <RadialGradientBrush Center="0.5,0.5" GradientOrigin="0.5,0.5">
+                                                                        <RadialGradientBrush.GradientStops>
+                                                                            <GradientStop Offset="0.55" Color="Black"/>
+                                                                            <GradientStop Offset="1" Color="#7F000000"/>
+                                                                        </RadialGradientBrush.GradientStops>
+                                                                    </RadialGradientBrush>
+                                                                </Ellipse.OpacityMask>
+                                                            </Ellipse>
+                                                            <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                                <Ellipse.Fill>
+                                                                    <RadialGradientBrush Center="0.5,0.5" GradientOrigin="0.5,0.5">
+                                                                        <RadialGradientBrush.GradientStops>
+                                                                            <GradientStop Offset="0" Color="White"/>
                                                                             <GradientStop Offset="1" Color="#00FFFFFF"/>
-                                                                        </LinearGradientBrush.GradientStops>
-                                                                    </LinearGradientBrush>
-                                                                </Canvas.Background>
-                                                            </Canvas>
+                                                                        </RadialGradientBrush.GradientStops>
+                                                                    </RadialGradientBrush>
+                                                                </Ellipse.Fill>
+                                                            </Ellipse>
                                                         </Grid>
-                                                    </Border>
-                                                </VisualBrush.Visual>
-                                            </VisualBrush>
-                                        </Grid.Background>
+                                                    </VisualBrush.Visual>
+                                                </VisualBrush>
+                                            </apictrl:Reveal.Hover>
+                                            <apictrl:Reveal.OpacityMask>
+                                                <VisualBrush>
+                                                    <VisualBrush.Visual>
+                                                        <Grid Background="#01000000" ClipToBounds="True">
+                                                            <Border Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Background="#C0000000" BorderBrush="Transparent" BorderThickness="5" CornerRadius="3" UseLayoutRounding="True">
+                                                                <Border.Effect>
+                                                                    <BlurEffect Radius="5" KernelType="Gaussian"/>
+                                                                </Border.Effect>
+                                                            </Border>
+                                                        </Grid>
+                                                    </VisualBrush.Visual>
+                                                </VisualBrush>
+                                            </apictrl:Reveal.OpacityMask>
+                                        </apictrl:Reveal>
+                                        <apictrl:Reveal HoverWidth="{Binding Width, Source={x:Reference OuterGlowSize}}" HoverHeight="{Binding Width, Source={x:Reference OuterGlowSize}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1">
+                                            <apictrl:Reveal.Hover>
+                                                <VisualBrush>
+                                                    <VisualBrush.Visual>
+                                                        <Grid Background="#01000000" Width="{Binding Width, Source={x:Reference OuterGlowSize}}" Height="{Binding Width, Source={x:Reference OuterGlowSize}}">
+                                                            <Grid.Effect>
+                                                                <BlurEffect Radius="128" KernelType="Gaussian"/>
+                                                            </Grid.Effect>
+                                                            <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{TemplateBinding Background}">
+                                                                <Ellipse.OpacityMask>
+                                                                    <RadialGradientBrush Center="0.5,0.5" GradientOrigin="0.5,0.5">
+                                                                        <RadialGradientBrush.GradientStops>
+                                                                            <GradientStop Offset="0.55" Color="Black"/>
+                                                                            <GradientStop Offset="1" Color="#7F000000"/>
+                                                                        </RadialGradientBrush.GradientStops>
+                                                                    </RadialGradientBrush>
+                                                                </Ellipse.OpacityMask>
+                                                            </Ellipse>
+                                                            <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                                <Ellipse.Fill>
+                                                                    <RadialGradientBrush Center="0.5,0.5" GradientOrigin="0.5,0.5">
+                                                                        <RadialGradientBrush.GradientStops>
+                                                                            <GradientStop Offset="0" Color="White"/>
+                                                                            <GradientStop Offset="1" Color="#00FFFFFF"/>
+                                                                        </RadialGradientBrush.GradientStops>
+                                                                    </RadialGradientBrush>
+                                                                </Ellipse.Fill>
+                                                            </Ellipse>
+                                                        </Grid>
+                                                    </VisualBrush.Visual>
+                                                </VisualBrush>
+                                            </apictrl:Reveal.Hover>
+                                            <apictrl:Reveal.OpacityMask>
+                                                <VisualBrush>
+                                                    <VisualBrush.Visual>
+                                                        <Grid Background="#01000000" ClipToBounds="True">
+                                                            <Border Background="Transparent" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" BorderBrush="Black" BorderThickness="25" UseLayoutRounding="True" Margin="-18">
+                                                                <Border.Effect>
+                                                                    <BlurEffect Radius="25" KernelType="Gaussian"/>
+                                                                </Border.Effect>
+                                                            </Border>
+                                                        </Grid>
+                                                    </VisualBrush.Visual>
+                                                </VisualBrush>
+                                            </apictrl:Reveal.OpacityMask>
+                                        </apictrl:Reveal>
                                     </Grid>
+                                </Border>
+                                <Border BorderThickness="1">
+                                    <Grid x:Name="ContentRoot">
+                                        <ContentPresenter x:Name="PART_ContentPresenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Visibility="Hidden"/>
+                                        <GridViewRowPresenter x:Name="PART_GridViewRowPesenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Visibility="Visible" />
+                                    </Grid>
+                                </Border>
+                                <Grid x:Name="ShineGrid" ClipToBounds="True">
+                                    <Grid.OpacityMask>
+                                        <VisualBrush>
+                                            <VisualBrush.Visual>
+                                                <Border Width="{Binding ActualWidth, Source={x:Reference BackBorder}}" Height="{Binding ActualHeight, Source={x:Reference BackBorder}}" Background="Black" BorderBrush="Transparent" BorderThickness="1" CornerRadius="3"/>
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </Grid.OpacityMask>
+                                    <Grid.Background>
+                                        <VisualBrush>
+                                            <VisualBrush.Visual>
+                                                <Border Width="{Binding ActualWidth, Source={x:Reference BackBorder}}" Height="{Binding ActualHeight, Source={x:Reference BackBorder}}" CornerRadius="3">
+                                                    <Border.Background>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                            <LinearGradientBrush.GradientStops>
+                                                                <GradientStop Offset="0" Color="#C0FFFFFF"/>
+                                                                <GradientStop Offset="0.5" Color="#00FFFFFF"/>
+                                                                <GradientStop Offset="0.75" Color="#00FFFFFF"/>
+                                                                <GradientStop Offset="1" Color="#A0FFFFFF"/>
+                                                            </LinearGradientBrush.GradientStops>
+                                                        </LinearGradientBrush>
+                                                    </Border.Background>
+                                                    <Grid ClipToBounds="True" UseLayoutRounding="True">
+                                                        <Grid.Effect>
+                                                            <BlurEffect Radius="5" KernelType="Gaussian"/>
+                                                        </Grid.Effect>
+                                                        <Border BorderBrush="#C0FFFFFF" BorderThickness="3,1,3,0" CornerRadius="3" Margin="-1"/>
+                                                        <Canvas Width="10" HorizontalAlignment="Left" Margin="6,4">
+                                                            <Canvas.Background>
+                                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                                    <LinearGradientBrush.GradientStops>
+                                                                        <GradientStop Offset="0" Color="#00FFFFFF"/>
+                                                                        <GradientStop Offset="0.125" Color="#C0FFFFFF"/>
+                                                                        <GradientStop Offset="1" Color="#00FFFFFF"/>
+                                                                    </LinearGradientBrush.GradientStops>
+                                                                </LinearGradientBrush>
+                                                            </Canvas.Background>
+                                                        </Canvas>
+                                                    </Grid>
+                                                </Border>
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </Grid.Background>
                                 </Grid>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="GridView.ColumnCollection" Value="{x:Null}">
-                                        <Setter TargetName="PART_ContentPresenter" Property="Visibility" Value="Visible"/>
-                                        <Setter TargetName="PART_GridViewRowPesenter" Property="Visibility" Value="Hidden"/>
-                                    </Trigger>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Trigger.EnterActions>
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <DoubleAnimation Storyboard.TargetName="HoverBackground" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125"/>
-                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HoverBackground" Storyboard.TargetProperty="Visibility" Duration="0:0:0.01">
-                                                        <DiscreteObjectKeyFrame Value="{x:Static Visibility.Visible}" KeyTime="0:0:0"/>
-                                                    </ObjectAnimationUsingKeyFrames>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </Trigger.EnterActions>
-                                        <Trigger.ExitActions>
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <DoubleAnimation Storyboard.TargetName="HoverBackground" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25"/>
-                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HoverBackground" Storyboard.TargetProperty="Visibility" Duration="0:0:0.26">
-                                                        <DiscreteObjectKeyFrame Value="{x:Static Visibility.Hidden}" KeyTime="0:0:0.25"/>
-                                                    </ObjectAnimationUsingKeyFrames>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </Trigger.ExitActions>
-                                    </Trigger>
-                                    <Trigger Property="Tag" Value="Small">
-                                        <Setter Property="Width" Value="64"/>
-                                        <Setter Property="Height" Value="64"/>
-                                        <Setter Property="Foreground" Value="Transparent" />
-                                        <Setter Property="VerticalContentAlignment" Value="Top"/>
-                                        <Setter TargetName="OuterGlowSize" Property="Width" Value="256"/>
-                                        <Setter TargetName="InnerGlowSize" Property="Width" Value="128"/>
-                                    </Trigger>
-                                    <Trigger Property="Tag" Value="Medium">
-                                        <Setter Property="Width" Value="128"/>
-                                        <Setter Property="Height" Value="128"/>
-                                        <Setter TargetName="OuterGlowSize" Property="Width" Value="512"/>
-                                        <Setter TargetName="InnerGlowSize" Property="Width" Value="256"/>
-                                    </Trigger>
-                                    <Trigger Property="Tag" Value="Wide">
-                                        <Setter Property="Width" Value="256"/>
-                                        <Setter Property="Height" Value="128"/>
-                                    </Trigger>
-                                    <Trigger Property="IsEnabled" Value="False">
-                                        <Setter TargetName="ContentRoot" Property="Opacity" Value="0.75"/>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </Setter.Value>
-        </Setter>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="GridView.ColumnCollection" Value="{x:Null}">
+                                    <Setter TargetName="PART_ContentPresenter" Property="Visibility" Value="Visible"/>
+                                    <Setter TargetName="PART_GridViewRowPesenter" Property="Visibility" Value="Hidden"/>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="HoverBackground" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125"/>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HoverBackground" Storyboard.TargetProperty="Visibility" Duration="0:0:0.01">
+                                                    <DiscreteObjectKeyFrame Value="{x:Static Visibility.Visible}" KeyTime="0:0:0"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.EnterActions>
+                                    <Trigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="HoverBackground" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25"/>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HoverBackground" Storyboard.TargetProperty="Visibility" Duration="0:0:0.26">
+                                                    <DiscreteObjectKeyFrame Value="{x:Static Visibility.Hidden}" KeyTime="0:0:0.25"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.ExitActions>
+                                </Trigger>
+                                <Trigger Property="Tag" Value="Small">
+                                    <Setter Property="Width" Value="64"/>
+                                    <Setter Property="Height" Value="64"/>
+                                    <Setter Property="Foreground" Value="Transparent" />
+                                    <Setter Property="VerticalContentAlignment" Value="Top"/>
+                                    <Setter TargetName="OuterGlowSize" Property="Width" Value="256"/>
+                                    <Setter TargetName="InnerGlowSize" Property="Width" Value="128"/>
+                                </Trigger>
+                                <Trigger Property="Tag" Value="Medium">
+                                    <Setter Property="Width" Value="128"/>
+                                    <Setter Property="Height" Value="128"/>
+                                    <Setter TargetName="OuterGlowSize" Property="Width" Value="512"/>
+                                    <Setter TargetName="InnerGlowSize" Property="Width" Value="256"/>
+                                </Trigger>
+                                <Trigger Property="Tag" Value="Wide">
+                                    <Setter Property="Width" Value="256"/>
+                                    <Setter Property="Height" Value="128"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="ContentRoot" Property="Opacity" Value="0.75"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Style.Resources>
+        <Setter Property="Margin" Value="3,3,7,3"/>
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate DataType="{x:Type disk:DiskItem}">
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                        <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" Width="32" Height="32" Background="Gray"/>
-                        <!-->
+                        <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" Width="32" Height="32">
                             <Canvas.Background>
                                 <Binding ConverterParameter="1024">
                                     <Binding.Converter>
@@ -985,7 +982,7 @@
                                     </Binding.Converter>
                                 </Binding>
                             </Canvas.Background>
-                        </Canvas-->
+                        </Canvas>
                         <ContentControl Content="{Binding ItemName}" Margin="16,8" Foreground="White" Focusable="False" IsTabStop="False" Opacity="1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                     </Grid>
                 </DataTemplate>
@@ -1400,7 +1397,7 @@
 
     <HierarchicalDataTemplate x:Key="AllAppsItemDataTemplate" DataType="{x:Type disk:DiskItem}" ItemsSource="{Binding SubItems}" ItemContainerStyle="{StaticResource {x:Type TreeViewItem}}">
         <DockPanel Margin="0,2">
-            <Canvas Width="16" Height="16" DockPanel.Dock="Left" Margin="0,0,8,0" Background="Gray"/><!-->
+            <Canvas Width="16" Height="16" DockPanel.Dock="Left" Margin="0,0,8,0">
                 <Canvas.Background>
                     <Binding ConverterParameter="16">
                         <Binding.Converter>
@@ -1408,7 +1405,7 @@
                         </Binding.Converter>
                     </Binding>
                 </Canvas.Background>
-            </Canvas-->
+            </Canvas>
             <TextBlock Text="{Binding ItemName}" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TreeView}}"/>
         </DockPanel>
     </HierarchicalDataTemplate>

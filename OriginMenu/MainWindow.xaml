@@ -87,10 +87,10 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <ToggleButton x:Name="AllAppsToggleButton" Style="{DynamicResource AllAppsToggleButtonStyle}" Click="AllAppsToggleButton_Click"/>
-            <TextBox x:Name="SearchBox" Style="{DynamicResource SearchBoxStyle}" Grid.Row="1" TextChanged="SearchBox_TextChanged"/>
+            <TextBox x:Name="SearchTextBox" Style="{DynamicResource SearchBoxStyle}" Grid.Row="1" TextChanged="SearchTextBox_TextChanged"/>
         </Grid>
         <Grid Grid.Column="1" Grid.RowSpan="3">
-            <ListView x:Name="PinnedItemsListView" ItemsSource="{Binding PinnedItems}" Style="{DynamicResource PinnedTilesListViewStyle}">
+            <ListView x:Name="PinnedItemsListView" ItemsSource="{Binding PinnedItems}" Style="{DynamicResource PinnedTilesListViewStyle}" SelectionChanged="PinnedItemsListView_SelectionChanged">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <objctrl:VariableSizedWrapGrid Orientation="Horizontal" LatchItemSize="False" StrictItemOrder="False"/>
